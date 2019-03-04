@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import apiKey from '../config'
+import apiKey from './config';
 
 import './index.css';
 import Header from './components/Header';
