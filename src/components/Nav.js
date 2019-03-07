@@ -1,13 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import Search from './Search';
 
-const Nav = ({ match }) => {
+
+const Nav = (props) => {
     return (
         <div className="container nav">
-            
-            <Search />
-            
             <nav className="main-nav">
                 <ul>
                 <li><NavLink to='/Cats'>Cats</NavLink></li>
