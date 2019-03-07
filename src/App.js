@@ -16,6 +16,8 @@ import Dogs from './components/Dogs';
 import Computers from './components/Computers';
 import NotFound from './components/NotFound';
 import Search from './components/Search';
+import Page404 from './components/Page404';
+
 
 
 export default class App extends Component {
@@ -64,7 +66,7 @@ export default class App extends Component {
             <Route exact path="/Cats" render={ () => <Cats data={this.state.items} /> } />
             <Route exact path="/Dogs" render={ () => <Dogs data={this.state.items} /> } />
             <Route exact path="/Computers" render={ () => <Computers data={this.state.items} /> } />
-            <Route component={NotFound} />
+            <Route component={Page404} />
           </Switch>
         </div>
       </BrowserRouter>
