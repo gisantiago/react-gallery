@@ -1,13 +1,20 @@
 import React from 'react';
-
+import GalleryList from './GalleryList';
 
 const Gallery = (props) => {
-    return (
-        <li>
-          
-                <img src={props.url} alt="" />
+    const results = props.data;
+    let items = results.map(item =>
+
+        <GalleryList url={`https://farm${item.farm}.staticflickr.com/${item.server}/${item.id}_${item.secret}.jpg`} key={item.id} />
+    );
     
-        </li>
+    return (
+        <div className="photo-container">
+            <h2>Results</h2>
+            <ul>
+                {items}
+            </ul>
+        </div>
     );
 }
 
