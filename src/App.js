@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import apiKey from './config';
-import axios from 'axios';
+//import axios from 'axios';
 import {
   BrowserRouter,
   Route,
@@ -15,6 +15,7 @@ import Cats from './components/Cats';
 import Dogs from './components/Dogs';
 import Computers from './components/Computers';
 import NotFound from './components/NotFound';
+import GalleryList from './components/GalleryList';
 
 
 
@@ -29,7 +30,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=cars&per_page=16&format=json&nojsoncallback=1`)
+    fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=ponce_pr&per_page=16&format=json&nojsoncallback=1`)
       .then(response => response.json())
       .then(responseData => {
         this.setState({
@@ -50,7 +51,7 @@ export default class App extends Component {
           <Nav />
           
           <Switch>
-            <Route exact data={this.state.items} path="/" component={Gallery} />
+            <Route exact path="/" render={ () => <Gallery data={this.state.items} /> } />
             <Route path="/Cats" component={Cats} />
             <Route path="/Dogs" component={Dogs} />
             <Route path="/Computers" component={Computers} />

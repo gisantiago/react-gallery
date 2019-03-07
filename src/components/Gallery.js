@@ -1,5 +1,6 @@
 import React from 'react';
 import GalleryList from './GalleryList';
+import '../App';
 
 const Gallery = (props) => {
     const results = props.data;
