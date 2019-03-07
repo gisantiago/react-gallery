@@ -3,7 +3,7 @@ import GalleryList from './GalleryList';
 import '../App';
 import NotFound from './NotFound';
 
-const Cats = (props) => {
+const Surf = (props) => {
     const results = props.data;
     let items;
     if (results.length > 0) {
@@ -22,4 +22,4 @@ const Cats = (props) => {
     );
 }
 
-export default Cats;
+export default Surf;

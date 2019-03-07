@@ -12,9 +12,8 @@ import Header from './components/Header';
 import Nav from './components/Nav'
 import Gallery from './components/Gallery';
 import Cats from './components/Cats';
-import Dogs from './components/Dogs';
+import Surf from './components/Surf';
 import Computers from './components/Computers';
-import NotFound from './components/NotFound';
 import Search from './components/Search';
 import Page404 from './components/Page404';
 
@@ -26,15 +25,60 @@ export default class App extends Component {
     super();
     this.state = {
       items: [],
+      surf: [],
+      computers: [],
       loading: true
     };
   }
 
   componentDidMount() {
-    this.performSearch();
+
+    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=mountains&per_page=16&format=json&nojsoncallback=1`)
+      .then(response => {
+        this.setState({
+          items: response.data.photos.photo,
+          loading: false
+      });
+    })
+      .catch( error => {
+        console.log('Error fetching and parsing data', error);
+      });
+    
+    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=cats&per_page=16&format=json&nojsoncallback=1`)
+      .then(response => {
+        this.setState({
+          cats: response.data.photos.photo,
+          loading: false
+      });
+    })
+      .catch( error => {
+        console.log('Error fetching and parsing data', error);
+      });
+
+    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=surf&per_page=16&format=json&nojsoncallback=1`)
+      .then(response => {
+        this.setState({
+          surf: response.data.photos.photo,
+          loading: false
+      });
+    })
+      .catch( error => {
+        console.log('Error fetching and parsing data', error);
+      });
+
+    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=gamingpc&per_page=16&format=json&nojsoncallback=1`)
+      .then(response => {
+        this.setState({
+          computers: response.data.photos.photo,
+          loading: false
+      });
+    })
+      .catch( error => {
+        console.log('Error fetching and parsing data', error);
+      });
   }
 
-  performSearch = (query = 'mountains') => {
+  performSearch = (query) => {
     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=16&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
@@ -49,7 +93,7 @@ export default class App extends Component {
 
 
   render() {
-    console.log(this.state.items);
+    console.log(this.state.cats);
     return (
       <BrowserRouter>
         <div className="container">
@@ -63,9 +107,9 @@ export default class App extends Component {
               ? <p>Loading...</p>
               :  <Route exact path="/" render={ () => <Gallery data={this.state.items} /> } />
             }
-            <Route exact path="/Cats" render={ () => <Cats data={this.state.items} /> } />
-            <Route exact path="/Dogs" render={ () => <Dogs data={this.state.items} /> } />
-            <Route exact path="/Computers" render={ () => <Computers data={this.state.items} /> } />
+            <Route exact path="/Cats" render={ () => <Cats data={this.state.cats} /> } />
+            <Route exact path="/Surf" render={ () => <Surf data={this.state.surf} /> } />
+            <Route exact path="/Computers" render={ () => <Computers data={this.state.computers} /> } />
             <Route component={Page404} />
           </Switch>
         </div>

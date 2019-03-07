@@ -1,15 +1,24 @@
 import React from 'react';
+import GalleryList from './GalleryList';
+import '../App';
+import NotFound from './NotFound';
 
 const Computers = (props) => {
+    const results = props.data;
+    let items;
+    if (results.length > 0) {
+        items = results.map(item => <GalleryList url={`https://farm${item.farm}.staticflickr.com/${item.server}/${item.id}_${item.secret}.jpg`} key={item.id} /> );
+    } else {
+        items = <NotFound />
+    }
+
     return (
         <div className="photo-container">
             <h2>Results</h2>
             <ul>
-                <li>
-                    <img src="https://farm5.staticflickr.com/4334/37032996241_4c16a9b530.jpg" alt="" />
-                </li>
+                {items}
             </ul>
-      </div>
+        </div>
     );
 }
 
