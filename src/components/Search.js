@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
-export default class Search extends Component {
-
-    state = {
-        searchText: ''
-    }
+class Search extends Component {
+    
+    constructor(props) {
+        super(props);
+        this.state = { searchText: '' };
+      }
+    // state = {
+    //     searchText: ''
+    // }
     
     onSearchChange = e => {
         this.setState({ searchText: e.target.value });
@@ -13,6 +18,8 @@ export default class Search extends Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.onSearch(this.query.value, 'results');
+        let path = `/results?q=${this.query.value}`;
+        this.props.history.push(path);
         e.currentTarget.reset();
     }
 
@@ -35,3 +42,4 @@ export default class Search extends Component {
     }
 }
 
+export default withRouter(Search);

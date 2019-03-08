@@ -11,9 +11,6 @@ import './index.css';
 import Header from './components/Header';
 import Nav from './components/Nav'
 import Gallery from './components/Gallery';
-// import Cats from './components/Cats';
-import Surf from './components/Surf';
-import Computers from './components/Computers';
 import Search from './components/Search';
 import Page404 from './components/Page404';
 
@@ -21,10 +18,9 @@ import Page404 from './components/Page404';
 
 export default class App extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      results: [],
       cats: [],
       surf: [],
       computers: [],
@@ -34,7 +30,7 @@ export default class App extends Component {
 
   componentDidMount() {
 
-     this.performSearch('mountains', 'mountains');
+   this.performSearch('mountains', 'mountains');
  
   }
 
@@ -53,24 +49,24 @@ export default class App extends Component {
 
 
   render() {
-    console.log(this.state.query);
+    
     return (
       <BrowserRouter>
         <div className="container">
           <Header />
           <Search onSearch={this.performSearch} />
           <Nav />
-           
+          
           <Switch>
             {
               (this.state.loading)
               ? <p>Loading...</p>
-              :  <Route exact path="/" render={ () => <Gallery data={this.state.mountains} /> } />
+              : <Route exact path="/" render={ () => <Gallery data={this.state.mountains} /> } />
             }
             <Route exact path="/Cats" render={ () => <Gallery performSearch={this.performSearch('cats', 'cats')} data={this.state.cats} /> } />
             <Route exact path="/Surf" render={ () => <Gallery performSearch={this.performSearch('surf', 'surf')} data={this.state.surf} /> } />
-            <Route exact path="/Computers" render={ () => <Gallery performSearch={this.performSearch('gaming-pc', 'computers')} data={this.state.computers} /> } />
-            <Route performSearch={this.performSearch()} data={this.state.results} /> } />
+            <Route exact path="/Computers" render={ () => <Gallery performSearch={this.performSearch('computers', 'computers')} data={this.state.computers} /> } />
+            <Route exact path="/results" render={ () => <Gallery data={this.state.results} /> } />
             <Route component={Page404} />
           </Switch>
         </div>
