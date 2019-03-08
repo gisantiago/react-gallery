@@ -4,7 +4,7 @@ import React from 'react';
 const GalleryList = (props) => {
     return (
         <li>
-            <img src={props.url} alt="" />
+            <img src={props.src} alt="" />
         </li>
     );
 }

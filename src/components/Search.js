@@ -12,7 +12,7 @@ export default class Search extends Component {
     
     handleSubmit = e => {
         e.preventDefault();
-        this.props.onSearch(this.query.value);
+        this.props.onSearch(this.query.value, 'results');
         e.currentTarget.reset();
     }
 
@@ -30,7 +30,7 @@ export default class Search extends Component {
                     <path d="M0 0h24v24H0z" fill="none"/>
                 </svg>
                 </button>
-        </form>
+            </form>
         );
     }
 }

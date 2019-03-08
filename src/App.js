@@ -11,7 +11,7 @@ import './index.css';
 import Header from './components/Header';
 import Nav from './components/Nav'
 import Gallery from './components/Gallery';
-import Cats from './components/Cats';
+// import Cats from './components/Cats';
 import Surf from './components/Surf';
 import Computers from './components/Computers';
 import Search from './components/Search';
@@ -24,7 +24,8 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      items: [],
+      results: [],
+      cats: [],
       surf: [],
       computers: [],
       loading: true
@@ -33,56 +34,15 @@ export default class App extends Component {
 
   componentDidMount() {
 
-    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=mountains&per_page=16&format=json&nojsoncallback=1`)
-      .then(response => {
-        this.setState({
-          items: response.data.photos.photo,
-          loading: false
-      });
-    })
-      .catch( error => {
-        console.log('Error fetching and parsing data', error);
-      });
-    
-    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=cats&per_page=16&format=json&nojsoncallback=1`)
-      .then(response => {
-        this.setState({
-          cats: response.data.photos.photo,
-          loading: false
-      });
-    })
-      .catch( error => {
-        console.log('Error fetching and parsing data', error);
-      });
-
-    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=surf&per_page=16&format=json&nojsoncallback=1`)
-      .then(response => {
-        this.setState({
-          surf: response.data.photos.photo,
-          loading: false
-      });
-    })
-      .catch( error => {
-        console.log('Error fetching and parsing data', error);
-      });
-
-    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=gamingpc&per_page=16&format=json&nojsoncallback=1`)
-      .then(response => {
-        this.setState({
-          computers: response.data.photos.photo,
-          loading: false
-      });
-    })
-      .catch( error => {
-        console.log('Error fetching and parsing data', error);
-      });
+     this.performSearch('mountains', 'mountains');
+ 
   }
 
-  performSearch = (query) => {
+  performSearch = (query, input) => {
     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=16&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
-          items: response.data.photos.photo,
+          [input]: response.data.photos.photo,
           loading: false
       });
     })
@@ -93,7 +53,7 @@ export default class App extends Component {
 
 
   render() {
-    console.log(this.state.cats);
+    console.log(this.state.query);
     return (
       <BrowserRouter>
         <div className="container">
@@ -105,11 +65,12 @@ export default class App extends Component {
             {
               (this.state.loading)
               ? <p>Loading...</p>
-              :  <Route exact path="/" render={ () => <Gallery data={this.state.items} /> } />
+              :  <Route exact path="/" render={ () => <Gallery data={this.state.mountains} /> } />
             }
-            <Route exact path="/Cats" render={ () => <Cats data={this.state.cats} /> } />
-            <Route exact path="/Surf" render={ () => <Surf data={this.state.surf} /> } />
-            <Route exact path="/Computers" render={ () => <Computers data={this.state.computers} /> } />
+            <Route exact path="/Cats" render={ () => <Gallery performSearch={this.performSearch('cats', 'cats')} data={this.state.cats} /> } />
+            <Route exact path="/Surf" render={ () => <Gallery performSearch={this.performSearch('surf', 'surf')} data={this.state.surf} /> } />
+            <Route exact path="/Computers" render={ () => <Gallery performSearch={this.performSearch('gaming-pc', 'computers')} data={this.state.computers} /> } />
+            <Route performSearch={this.performSearch()} data={this.state.results} /> } />
             <Route component={Page404} />
           </Switch>
         </div>
