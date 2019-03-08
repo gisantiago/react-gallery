@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+// the { withRouter } function allows to export a block of code to be rendered on another class or function
+// this function basically takes another container as an argument. 
+// see lines: 23-24 and 47
 import { withRouter } from 'react-router-dom';
 
 class Search extends Component {
@@ -7,17 +10,14 @@ class Search extends Component {
         super(props);
         this.state = { searchText: '' };
       }
-    // state = {
-    //     searchText: ''
-    // }
-    
+      
     onSearchChange = e => {
         this.setState({ searchText: e.target.value });
     }
     
     handleSubmit = e => {
         e.preventDefault();
-        this.props.onSearch(this.query.value, 'results');
+        this.props.onSearch(this.query.value, 'results'); 
         let path = `/results?q=${this.query.value}`;
         this.props.history.push(path);
         e.currentTarget.reset();

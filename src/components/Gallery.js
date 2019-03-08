@@ -3,7 +3,7 @@ import GalleryList from './GalleryList';
 import '../App';
 import NotFound from './NotFound';
 
-
+// The Gallery function takes the data from the App's performSearch function as an argument (props) and maps the url creating an array
 const Gallery = (props) => {
     const results = props.data;
     let items;
