@@ -47,7 +47,6 @@ export default class App extends Component {
       });
   }
 
-  loading = () =>  (this.state.loading) 
 
   render() {
     
@@ -57,20 +56,17 @@ export default class App extends Component {
           <Header />
           <Search onSearch={this.performSearch} />
           <Nav />
-          {
-            (this.state.loading) 
-            ? <p>Loading...</p>
-            :
+        
             <Switch>
               
-              <Route exact path="/" render={ () => <Gallery data={this.state.mountains} /> } />
-              <Route exact path="/Cats" render={ () => <Gallery performSearch={this.performSearch('cats', 'cats')} data={this.state.cats} /> } />
-              <Route exact path="/Surf" render={ () => <Gallery performSearch={this.performSearch('surf', 'surf')} data={this.state.surf} /> } />
-              <Route exact path="/Computers" render={ () => <Gallery performSearch={this.performSearch('computers', 'computers')} data={this.state.computers} /> } />
-              <Route exact path="/results" render={ () => <Gallery data={this.state.results} /> } />
+              <Route exact path="/" render={ () => <Gallery loading={this.state.loading} data={this.state.mountains} /> } />
+              <Route exact path="/Cats" render={ () => <Gallery loading={this.state.loading} performSearch={this.performSearch('cats', 'cats')} data={this.state.cats} /> } />
+              <Route exact path="/Surf" render={ () => <Gallery loading={this.state.loading} performSearch={this.performSearch('surf', 'surf')} data={this.state.surf} /> } />
+              <Route exact path="/Computers" render={ () => <Gallery loading={this.state.loading} performSearch={this.performSearch('computers', 'computers')} data={this.state.computers} /> } />
+              <Route exact path="/results" render={ () => <Gallery loading={this.state.loading} data={this.state.results} /> } />
               <Route component={Page404} />
             </Switch>
-          }
+          
         </div>
       </BrowserRouter>
     );
