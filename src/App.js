@@ -30,11 +30,15 @@ export default class App extends Component {
 
   componentDidMount() {
    this.performSearch('mountains', 'mountains');
-  
+   this.performSearch('cats', 'cats');
+   this.performSearch('surf', 'surf');
+   this.performSearch('computers', 'computers');
   }
 
 
   performSearch = (query, input) => {
+    this.setState({loading: true});
+    
     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=16&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
@@ -48,8 +52,9 @@ export default class App extends Component {
   }
 
 
+  
   render() {
-    
+    console.log(this.state.loading);
     return (
       <BrowserRouter>
         <div className="container">
@@ -57,15 +62,24 @@ export default class App extends Component {
           <Search onSearch={this.performSearch} />
           <Nav />
         
-            <Switch>
-              
-              <Route exact path="/" render={ () => <Gallery loading={this.state.loading} data={this.state.mountains} /> } />
-              <Route exact path="/Cats" render={ () => <Gallery loading={this.state.loading} performSearch={this.performSearch('cats', 'cats')} data={this.state.cats} /> } />
-              <Route exact path="/Surf" render={ () => <Gallery loading={this.state.loading} performSearch={this.performSearch('surf', 'surf')} data={this.state.surf} /> } />
-              <Route exact path="/Computers" render={ () => <Gallery loading={this.state.loading} performSearch={this.performSearch('computers', 'computers')} data={this.state.computers} /> } />
-              <Route exact path="/results" render={ () => <Gallery loading={this.state.loading} data={this.state.results} /> } />
-              <Route component={Page404} />
-            </Switch>
+          <Switch>
+            <Route exact path="/" render={ () => (this.state.loading) 
+                    ? <p> Loading...</p> 
+                    : <Gallery data={this.state.mountains} /> } />
+            <Route exact path="/Cats" render={ () => (this.state.loading) 
+                    ? <p> Loading...</p> 
+                    : <Gallery  data={this.state.cats} /> } />
+            <Route exact path="/Surf" render={ () => (this.state.loading) 
+                    ? <p> Loading...</p> 
+                    : <Gallery  data={this.state.surf} /> } />
+            <Route exact path="/Computers" render={ () => (this.state.loading) 
+                    ? <p> Loading...</p> 
+                    : <Gallery  data={this.state.computers} /> } />
+            <Route exact path="/results" render={ () => (this.state.loading) 
+                    ? <p> Loading...</p> 
+                    : <Gallery data={this.state.results} /> } />
+            <Route component={Page404} />
+          </Switch>
           
         </div>
       </BrowserRouter>
