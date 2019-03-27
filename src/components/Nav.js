@@ -1,14 +1,19 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+
 
 const Nav = (props) => {
     return (
-        <nav class="main-nav">
-            <ul>
-                <li><a href='{#}'>Cats</a></li>
-                <li><a href='{#}'>Dogs</a></li>
-                <li><a href='{#}'>Computers</a></li>
-            </ul>
-        </nav>
+        <div className="container nav">
+            <nav className="main-nav">
+                <ul>
+                <li><NavLink exact to='/'>Home</NavLink></li>    
+                <li><NavLink to='/Cats'>Cats</NavLink></li>
+                <li><NavLink to='/Surf'>Surf</NavLink></li>
+                <li><NavLink to='/Computers'>Computers</NavLink></li>
+                </ul>
+            </nav>
+        </div>
     );
 }
 
